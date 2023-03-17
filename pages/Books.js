@@ -5,8 +5,10 @@ import {
   Button,
   FlatList,
   TextInput,
+  Image,
 } from "react-native";
 import * as React from "react";
+import bookCover from "../assets/bookCover.jpg";
 
 const Books = () => {
   const [books, setBooks] = React.useState([]);
@@ -25,14 +27,14 @@ const Books = () => {
         {
           title:
             "The chronicles of Narnia, the lion the witch and the wardrobe",
-          pages: "a lot",
+          pages: "540",
         },
       ];
     });
   };
 
   const addBookHandler = () => {
-    if (bookTitle.length > 1) {
+    if (bookTitle.length > 1 && !isNaN(bookPages)) {
       setBooks((prev) => {
         return [...prev, { title: bookTitle, pages: bookPages }];
       });
@@ -73,9 +75,12 @@ const Books = () => {
       <FlatList
         data={books}
         renderItem={({ item }) => (
-          <Text
-            style={styles.books}
-          >{`title: ${item.title} \n pages: ${item.pages}`}</Text>
+          <View style={styles.bookContent}>
+            <Text style={styles.books}>
+              {`title: ${item.title} \n pages: ${item.pages}`}
+            </Text>
+            <Image style={styles.bookCover} source={bookCover} />
+          </View>
         )}
       />
     </View>
@@ -103,6 +108,20 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: "#09ad35",
+  },
+  bookCover: {
+    maxHeight: 100,
+    maxWidth: 100,
+    marginLeft: "auto",
+    marginRight: "auto",
+  },
+  bookContent: {
+    marginTop: 10,
+    borderColor: "#09ad35",
+    borderWidth: 5,
+    paddingBottom: 5,
+    flex: 1,
+    justifyContent: "flex-start",
   },
 });
 
