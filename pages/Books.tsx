@@ -15,8 +15,26 @@ const Books = () => {
   const [books, setBooks] = React.useState([]);
   const [bookTitle, setBookTitle] = React.useState("");
   const [bookPages, setBookPages] = React.useState("");
-  const [bookRating, setBookRating] = React.useState(0);
+  const [bookRating, setBookRating] = React.useState("");
   const color = "000000";
+
+  const generateRating = (number: number) => {
+    let toReturn = Array<any>();
+    let stars: number = number;
+    let starsEmpty: number = 5.0;
+    for (let i = stars; i > 0.5; i -= 1.0) {
+      toReturn.push(<Ionicons name={"star"} style={styles.star} />);
+      starsEmpty -= 1.0;
+      stars -= 1.0;
+    }
+    if (stars > 0) {
+      toReturn.push(<Ionicons name={"star-half"} style={styles.star} />);
+    }
+    for (let i = starsEmpty; i > 1; i -= 1.0) {
+      toReturn.push(<Ionicons name={"star-outline"} style={styles.star} />);
+    }
+    return toReturn;
+  };
 
   const resetButtonHandler = () => {
     setBooks([]);
@@ -30,14 +48,14 @@ const Books = () => {
           title:
             "The chronicles of Narnia, the lion the witch and the wardrobe",
           pages: "540",
-          rating: 0,
+          rating: 5,
         },
       ];
     });
   };
 
   const addBookHandler = () => {
-    if (bookTitle.length > 1 && !isNaN(bookPages)) {
+    if (bookTitle.length > 1 && !isNaN(Number(bookPages))) {
       setBooks((prev) => {
         return [
           ...prev,
@@ -46,7 +64,7 @@ const Books = () => {
       });
       setBookPages("");
       setBookTitle("");
-      setBookRating(0);
+      setBookRating("0");
     }
   };
 
@@ -81,7 +99,7 @@ const Books = () => {
       <TextInput
         style={styles.input}
         onChangeText={(newText) => setBookRating(newText)}
-        value={bookRating}
+        value={bookRating.toString()}
       ></TextInput>
 
       <FlatList
@@ -89,15 +107,11 @@ const Books = () => {
         renderItem={({ item }) => (
           <View style={styles.bookContent}>
             <Text style={styles.books}>
-              {`title: ${item.title} \n pages: ${item.pages}`}
+              {`title: ${item.title} \npages: ${item.pages}`}
             </Text>
 
             <Image style={styles.bookCover} source={bookCover} />
-            <Ionicons name={"star"} style={styles.star} />
-            <Ionicons name={"star"} style={styles.star} />
-            <Ionicons name={"star"} style={styles.star} />
-            <Ionicons name={"star"} style={styles.star} />
-            <Ionicons name={"star-half"} style={styles.starEnd} />
+            {generateRating(item.rating)}
           </View>
         )}
       />
@@ -127,6 +141,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#09ad35",
     flex: 1,
+    fontStyle: "italic",
   },
   bookCover: {
     maxHeight: 100,
