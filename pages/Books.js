@@ -9,11 +9,13 @@ import {
 } from "react-native";
 import * as React from "react";
 import bookCover from "../assets/bookCover.jpg";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Books = () => {
   const [books, setBooks] = React.useState([]);
   const [bookTitle, setBookTitle] = React.useState("");
   const [bookPages, setBookPages] = React.useState("");
+  const [bookRating, setBookRating] = React.useState(0);
   const color = "000000";
 
   const resetButtonHandler = () => {
@@ -28,6 +30,7 @@ const Books = () => {
           title:
             "The chronicles of Narnia, the lion the witch and the wardrobe",
           pages: "540",
+          rating: 0,
         },
       ];
     });
@@ -36,10 +39,14 @@ const Books = () => {
   const addBookHandler = () => {
     if (bookTitle.length > 1 && !isNaN(bookPages)) {
       setBooks((prev) => {
-        return [...prev, { title: bookTitle, pages: bookPages }];
+        return [
+          ...prev,
+          { title: bookTitle, pages: bookPages, rating: bookRating },
+        ];
       });
       setBookPages("");
       setBookTitle("");
+      setBookRating(0);
     }
   };
 
@@ -71,6 +78,11 @@ const Books = () => {
         onChangeText={(newText) => setBookPages(newText)}
         value={bookPages}
       ></TextInput>
+      <TextInput
+        style={styles.input}
+        onChangeText={(newText) => setBookRating(newText)}
+        value={bookRating}
+      ></TextInput>
 
       <FlatList
         data={books}
@@ -79,7 +91,13 @@ const Books = () => {
             <Text style={styles.books}>
               {`title: ${item.title} \n pages: ${item.pages}`}
             </Text>
+
             <Image style={styles.bookCover} source={bookCover} />
+            <Ionicons name={"star"} style={styles.star} />
+            <Ionicons name={"star"} style={styles.star} />
+            <Ionicons name={"star"} style={styles.star} />
+            <Ionicons name={"star"} style={styles.star} />
+            <Ionicons name={"star-half"} style={styles.starEnd} />
           </View>
         )}
       />
@@ -108,12 +126,12 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 1,
     borderColor: "#09ad35",
+    flex: 1,
   },
   bookCover: {
     maxHeight: 100,
     maxWidth: 100,
-    marginLeft: "auto",
-    marginRight: "auto",
+    margin: 10,
   },
   bookContent: {
     marginTop: 10,
@@ -121,7 +139,13 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     paddingBottom: 5,
     flex: 1,
-    justifyContent: "flex-start",
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  star: { marginTop: 10 },
+  starEnd: {
+    marginRight: 10,
+    marginTop: 10,
   },
 });
 
