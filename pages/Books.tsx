@@ -101,16 +101,19 @@ const Books = () => {
         style={styles.input}
         onChangeText={(newText) => setBookTitle(newText)}
         value={bookTitle}
+        placeholder={"Book title"}
       ></TextInput>
       <TextInput
         style={styles.input}
         onChangeText={(newText) => setBookPages(newText)}
         value={bookPages}
+        placeholder={"Number of pages"}
       ></TextInput>
       <TextInput
         style={styles.input}
         onChangeText={(newText) => setBookRating(newText)}
         value={bookRating.toString()}
+        placeholder={"0"}
       ></TextInput>
 
       <FlatList
