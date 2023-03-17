@@ -7,14 +7,8 @@ import * as React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "./pages/HomePage";
-
-function SettingsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Settings!</Text>
-    </View>
-  );
-}
+import SettingsScreen from "./pages/SettingsScreen";
+import Books from "./pages/Books";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,6 +34,8 @@ export default function App() {
                 : "ios-information-circle-outline";
             } else if (route.name === "Settings") {
               iconName = focused ? "ios-list" : "ios-list-outline";
+            } else if (route.name === "Books") {
+              iconName = focused ? "ios-book" : "ios-book-outline";
             }
 
             // You can return any component that you like here!
@@ -49,8 +45,9 @@ export default function App() {
           tabBarInactiveTintColor: "gray",
         })}
       >
-        <Tab.Screen name="Home" component={HomeScreen} options={{}} />
+        <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen name="Books" component={Books} />
       </Tab.Navigator>
     </NavigationContainer>
   );
