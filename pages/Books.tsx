@@ -19,6 +19,17 @@ const Books = () => {
   const color = "000000";
 
   const generateRating = (number: number) => {
+    if (number == 0) {
+      return (
+        <>
+          <Ionicons name={"star-outline"} style={styles.star} />
+          <Ionicons name={"star-outline"} style={styles.star} />
+          <Ionicons name={"star-outline"} style={styles.star} />
+          <Ionicons name={"star-outline"} style={styles.star} />
+          <Ionicons name={"star-outline"} style={styles.star} />
+        </>
+      );
+    }
     let toReturn = Array<any>();
     let stars: number = number;
     let starsEmpty: number = 5.0;
